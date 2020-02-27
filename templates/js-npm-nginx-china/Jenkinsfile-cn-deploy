@@ -46,9 +46,11 @@ podTemplate(label: label, containers: [
     stage("Deploy China PROD") {
       container("builder") {
         try {
-          butler.set_account_id("269758143319")
+          // set_image_repository(useECR, account_id, region, ecr_repo)
+          butler.set_image_repository(true, "269758143319")
+          
           // deploy(cluster, namespace, sub_domain, profile)
-          butler.deploy("skc2", "${SERVICE_GROUP}-prod", "${IMAGE_NAME}", "prod")
+          butler.deploy("okc5", "${SERVICE_GROUP}-prod", "${IMAGE_NAME}", "prod")
           butler.success([SLACK_TOKEN_DEV,SLACK_TOKEN_DQA], "Deploy PROD")
         } catch (e) {
           butler.failure([SLACK_TOKEN_DEV,SLACK_TOKEN_DQA], "Deploy PROD")
